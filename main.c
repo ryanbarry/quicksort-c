@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 void printArray(int a[], int start, int end) {
   printf("arr={");
@@ -8,7 +10,7 @@ void printArray(int a[], int start, int end) {
     }
     printf("%d", a[i]);
   }
-  printf("}\n");
+  printf("}");
 }
 
 void swap(int a[], int from, int to) {
@@ -26,11 +28,11 @@ void quicksort(int thelist[], int start, int end) {
   int pivot = thelist[end]; // choose last element's value as pivot
 
   // partition array, moving elements less than pivot to the left half, and greater elements to the right
-  int j = end-1;
+  int j = end;
   for(int i = start; i < j;) {
     if (thelist[i] > pivot) {
-      swap(thelist, i, j);
       j--; // move swap-to position down the array
+      swap(thelist, i, j);
     } else {
       i++; // only move on if element is less-than-or-equal-to pivot
     }
@@ -41,20 +43,43 @@ void quicksort(int thelist[], int start, int end) {
     swap(thelist, end, j);
   }
 
-  //recurse for left half and right half
+  //recurse for left and right "halves"
   quicksort(thelist, start, j-1);
   quicksort(thelist, j+1, end);
 }
 
 int main(int argc, char *argv[]) {
-  int arr[] = {1,3,4,9,7,6,8,2,5};
+  int arr[100];
+  //int arr[] = {1,1,3,5,4,2,9,8,7,6,5,6,7,8,2,5};
+  //int arr[] = {20,26,13,26,20,17,25};
+  //int arr[] = {70,70,71,71,71,71,73,72,70};
   int arrsz = sizeof(arr)/sizeof(int);
+
+  srand(time(NULL));
+  for(int i=0; i < arrsz; i++) {
+    arr[i] = rand() % 100;
+  }
 
   printf("before sorting, ");
   printArray(arr, 0, arrsz-1);
+  printf("\n");
 
   quicksort(arr, 0, arrsz-1);
 
   printf(" after sorting, ");
   printArray(arr, 0, arrsz-1);
+  printf("\n");
+
+  int max = 0, maxidx = 0, err = 0;
+  for(int i=0; i < arrsz; i++) {
+    if(arr[i] < max) {
+      printf("not sorted! idx %d has value %d which is less than value %d at idx %d\n", i, arr[i], max, maxidx);
+      err++;
+    } else {
+      max = arr[i];
+      maxidx = i;
+    }
+  }
+
+  return err;
 }
