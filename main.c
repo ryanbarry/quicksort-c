@@ -51,7 +51,11 @@ void quicksort(int thelist[], int start, int end) {
 int main(int argc, char *argv[]) {
   //int arr[1000000];
   int arrsz = 100000000;
-  int *arr = malloc(arrsz*sizeof(int));
+  int * arr = malloc(arrsz*sizeof(int));
+  if(NULL == arr) {
+    printf("couldn't allocate memory\n");
+    return -1;
+  }
   //int arr[] = {1,1,3,5,4,2,9,8,7,6,5,6,7,8,2,5};
   //int arr[] = {20,26,13,26,20,17,25};
   //int arr[] = {70,70,71,71,71,71,73,72,70};
