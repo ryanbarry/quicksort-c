@@ -49,27 +49,31 @@ void quicksort(int thelist[], int start, int end) {
 }
 
 int main(int argc, char *argv[]) {
-  int arr[100];
+  //int arr[1000000];
+  int arrsz = 100000000;
+  int *arr = malloc(arrsz*sizeof(int));
   //int arr[] = {1,1,3,5,4,2,9,8,7,6,5,6,7,8,2,5};
   //int arr[] = {20,26,13,26,20,17,25};
   //int arr[] = {70,70,71,71,71,71,73,72,70};
-  int arrsz = sizeof(arr)/sizeof(int);
 
   srand(time(NULL));
   for(int i=0; i < arrsz; i++) {
-    arr[i] = rand() % 100;
+    arr[i] = rand() % arrsz;
   }
 
+  /*
   printf("before sorting, ");
   printArray(arr, 0, arrsz-1);
   printf("\n");
+  */
 
   quicksort(arr, 0, arrsz-1);
 
+  /*
   printf(" after sorting, ");
   printArray(arr, 0, arrsz-1);
   printf("\n");
-
+  */
   int max = 0, maxidx = 0, err = 0;
   for(int i=0; i < arrsz; i++) {
     if(arr[i] < max) {
@@ -80,6 +84,7 @@ int main(int argc, char *argv[]) {
       maxidx = i;
     }
   }
+  printf("checked up to maxidx=%d\n", maxidx);
 
   return err;
 }
